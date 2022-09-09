@@ -1,3 +1,9 @@
+body {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #25e4bc, #3f8978);
+}
+
 .login-form {
   align-items: center;
   display: flex;
