@@ -26,3 +26,22 @@ app.use(
   app.post('/pessoas', repository.createPessoa)
   app.put('/pessoas/:id', repository.updatePessoa)
   app.delete('/pessoas/:id', repository.deletePessoa)
+  //---------------------------------------------------------
+  app.post('/jogos', repository.createJogo)
+  app.get('/jogos', repository.getJogos)
+  app.put('/jogos/:id', repository.updateJogos)
+  app.delete('/jogos/:id', repository.deleteJogos)
+  //---------------------------------------------------------
+  app.post('/favoritos', repository.createFav)
+  app.get('/favoritos', repository.getFav)
+  app.put('/favoritos/:id_favorito', repository.updateFav)
+  app.delete('/favoritos/:id_favorito', repository.deleteFav)
+  app.get('/favoritos/pessoa/:id_pessoa', repository.getFavByIdPessoa)
+  app.get('/favoritos/jogo/:id_jogo', repository.getFavByIdjogo)
+  //---------------------------------------------------------
+  app.post('/notas', repository.createNota)
+  app.get('/notas', repository.getNota)
+  app.put('/notas/:id_nota', repository.updateNota)
+  app.delete('/notas/:id_nota', repository.deleteNota)
+  app.get('/notas/pessoa/:id_pessoa', repository.getNotaByIdPessoa)
+  app.get('/notas/jogo/:id_jogo', repository.getNotaByIdjogo)
