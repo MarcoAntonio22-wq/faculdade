@@ -26,6 +26,8 @@ app.use(
   app.post('/pessoas', repository.createPessoa)
   app.put('/pessoas/:id', repository.updatePessoa)
   app.delete('/pessoas/:id', repository.deletePessoa)
+  app.get('/pessoas/nome/:nome', repository.getPessoaByNome)
+  app.get('/pessoas/email/:email', repository.getPessoaByEmail)
   //---------------------------------------------------------
   app.post('/jogos', repository.createJogo)
   app.get('/jogos', repository.getJogos)

@@ -26,6 +26,28 @@ const getPessoas = (request, response) => {
       response.status(200).json(results.rows)
     })
   }
+
+  const getPessoaByNome = (request, response) => {
+    const nome = request.params.nome
+  
+    pool.query('SELECT * FROM pessoas WHERE nome = $1', [nome], (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(200).json(results.rows)
+    })
+  }
+
+  const getPessoaByEmail = (request, response) => {
+    const email = request.params.email
+  
+    pool.query('SELECT * FROM pessoas WHERE email = $1', [email], (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(200).json(results.rows)
+    })
+  }
   
   const createPessoa = (request, response) => {
     const { nome, email, senha } = request.body
@@ -277,5 +299,7 @@ const getPessoas = (request, response) => {
     getNotaByIdjogo,
     getFavByIdPessoa,
     getFavByIdjogo,
+    getPessoaByNome,
+    getPessoaByEmail,
   
 }
