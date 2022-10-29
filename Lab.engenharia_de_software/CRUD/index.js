@@ -47,3 +47,4 @@ app.use(
   app.delete('/notas/:id_nota', repository.deleteNota)
   app.get('/notas/pessoa/:id_pessoa', repository.getNotaByIdPessoa)
   app.get('/notas/jogo/:id_jogo', repository.getNotaByIdjogo)
+  app.get('/notas/media', repository.getMediaNota)

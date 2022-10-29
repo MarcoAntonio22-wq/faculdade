@@ -89,9 +89,9 @@ const getPessoas = (request, response) => {
   //----------------------
   
   const createJogo = (request, response) => {
-    const { nome, descricao } = request.body
+    const { nome, descricao, instrucoes } = request.body
     
-    pool.query('INSERT INTO jogos (nome, descricao) VALUES ($1, $2)', [nome, descricao], (error, result) => {
+    pool.query('INSERT INTO jogos (nome, descricao, instrucoes) VALUES ($1, $2, $3)', [nome, descricao, instrucoes], (error, result) => {
       if (error) {
         throw error
       }
@@ -110,11 +110,11 @@ const getPessoas = (request, response) => {
 
   const updateJogos = (request, response) => {
     const id = parseInt(request.params.id)
-    const { nome, descricao } = request.body
+    const { nome, descricao, instrucoes } = request.body
   
     pool.query(
-      'UPDATE jogos SET nome = $1, descricao = $2 WHERE id = $3',
-      [nome, descricao, id],
+      'UPDATE jogos SET nome = $1, descricao = $2, instrucoes = $3 WHERE id = $4',
+      [nome, descricao, instrucoes,  id],
       (error, result) => {
         if (error) {
           throw error
@@ -276,6 +276,15 @@ const getPessoas = (request, response) => {
       response.status(200).json(results.rows)
     })
   }
+
+  const getMediaNota = (request, response) => {
+    pool.query('Select id_jogo, Avg(nota) From notas Group By id_jogo', (error, results) => { 
+      if (error) {
+        throw error
+      }
+      response.status(200).json(results.rows)
+    })
+  }
   //----------------------------------------------------------
   module.exports = {
     getPessoas,
@@ -301,5 +310,6 @@ const getPessoas = (request, response) => {
     getFavByIdjogo,
     getPessoaByNome,
     getPessoaByEmail,
+    getMediaNota,
   
 }
