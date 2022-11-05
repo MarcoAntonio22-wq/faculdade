@@ -135,6 +135,17 @@ const getPessoas = (request, response) => {
     })
   }
 
+  const getJogoById = (request, response) => {
+    const id = parseInt(request.params.id)
+  
+    pool.query('SELECT * FROM jogos WHERE id = $1', [id], (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(200).json(results.rows)
+    })
+  }
+
   //----------------------------------------------------------
 
   const createFav = (request, response) => {
@@ -311,5 +322,6 @@ const getPessoas = (request, response) => {
     getPessoaByNome,
     getPessoaByEmail,
     getMediaNota,
+    getJogoById,
   
 }

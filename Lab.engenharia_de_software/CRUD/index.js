@@ -31,6 +31,7 @@ app.use(
   //---------------------------------------------------------
   app.post('/jogos', repository.createJogo)
   app.get('/jogos', repository.getJogos)
+  app.get('/jogos/:id', repository.getJogoById)
   app.put('/jogos/:id', repository.updateJogos)
   app.delete('/jogos/:id', repository.deleteJogos)
   //---------------------------------------------------------
