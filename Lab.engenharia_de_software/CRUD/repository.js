@@ -216,6 +216,15 @@ const getPessoas = (request, response) => {
       response.status(200).json(results.rows)
     })
   }
+
+  const getCountFav = (request, response) => {
+    pool.query('Select COUNT(id_jogo) AS Quantidade_Favoritos, id_jogo From favoritos Group By id_jogo ORDER BY COUNT(id_jogo) DESC', (error, results) => { 
+      if (error) {
+        throw error
+      }
+      response.status(200).json(results.rows)
+    })
+  }
   
   //----------------------------------------------------------
   
@@ -289,7 +298,7 @@ const getPessoas = (request, response) => {
   }
 
   const getMediaNota = (request, response) => {
-    pool.query('Select id_jogo, Avg(nota) From notas Group By id_jogo', (error, results) => { 
+    pool.query('Select id_jogo, Avg(nota) as  Nota_Media From notas Group By id_jogo ORDER BY AVG(nota) DESC', (error, results) => { 
       if (error) {
         throw error
       }
@@ -323,5 +332,6 @@ const getPessoas = (request, response) => {
     getPessoaByEmail,
     getMediaNota,
     getJogoById,
+    getCountFav,
   
 }
