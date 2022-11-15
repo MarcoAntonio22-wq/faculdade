@@ -169,29 +169,31 @@ const getPessoas = (request, response) => {
   }
 
   const updateFav = (request, response) => {
-    const id_favorito = parseInt(request.params.id_favorito)
-    const { id_jogo, favorito, id_pessoa } = request.body
+    const id_jogo = parseInt(request.params.id_jogo)
+    const id_pessoa = parseInt(request.params.id_pessoa)
+    const {favorito} = request.body
   
     pool.query(
-      'UPDATE favoritos SET id_jogo = $1, favorito = $2, id_pessoa = $3 WHERE id_favorito = $4',
-      [id_jogo, favorito, id_pessoa, id_favorito],
+      'UPDATE favoritos SET id_jogo = $1, favorito = $2, id_pessoa = $3 WHERE id_jogo = $4 AND id_pessoa = $5',
+      [id_jogo, favorito, id_pessoa, id_jogo, id_pessoa],
       (error, result) => {
         if (error) {
           throw error
         }
-        response.status(200).send(`favorito ${id_favorito} atualizada com sucesso.`)
+        response.status(200).send(`favorito "jogo-${id_jogo} pessoa-${id_pessoa}" atualizada com sucesso.`)
       }
     )
   }
-  
+
   const deleteFav = (request, response) => {
-    const id_favorito = parseInt(request.params.id_favorito)
+    const id_jogo = parseInt(request.params.id_jogo)
+    const id_pessoa = parseInt(request.params.id_pessoa)
   
-    pool.query('DELETE FROM favoritos WHERE id_favorito = $1', [id_favorito], (error, result) => {
+    pool.query('DELETE FROM favoritos WHERE id_jogo = $1 AND id_pessoa = $2', [id_jogo, id_pessoa], (error, result) => {
       if (error) {
         throw error
       }
-      response.status(200).send(`Favorito removido com sucesso com o identificador: ${id_favorito}`)
+      response.status(200).send(`Favorito removido com sucesso com o identificador: jogo-${id_jogo} e pessoa-${id_pessoa}`)
     })
   }
 
@@ -210,6 +212,18 @@ const getPessoas = (request, response) => {
     const id_jogo = parseInt(request.params.id_jogo)
   
     pool.query('SELECT * FROM favoritos WHERE id_jogo = $1', [id_jogo], (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(200).json(results.rows)
+    })
+  }
+
+  const getFavByJogoPessoa = (request, response) => {
+    const id_jogo = parseInt(request.params.id_jogo)
+    const id_pessoa = parseInt(request.params.id_pessoa)
+  
+    pool.query('SELECT * FROM favoritos WHERE id_jogo = $1 AND id_pessoa = $2', [id_jogo, id_pessoa], (error, results) => {
       if (error) {
         throw error
       }
@@ -249,29 +263,31 @@ const getPessoas = (request, response) => {
   }
 
   const updateNota = (request, response) => {
-    const id_nota = parseInt(request.params.id_nota)
-    const { id_jogo, nota, id_pessoa } = request.body
-  
+    const id_jogo = parseInt(request.params.id_jogo)
+    const id_pessoa = parseInt(request.params.id_pessoa)
+    const {nota} = request.body
+    
     pool.query(
-      'UPDATE notas SET id_jogo = $1, nota = $2, id_pessoa = $3 WHERE id_nota = $4',
-      [id_jogo, nota, id_pessoa, id_nota],
+      'UPDATE notas SET id_jogo = $1, nota = $2, id_pessoa = $3 WHERE id_jogo = $4 AND id_pessoa = $5',
+      [id_jogo, nota, id_pessoa, id_jogo, id_pessoa],
       (error, result) => {
         if (error) {
           throw error
         }
-        response.status(200).send(`nota ${id_nota} atualizada com sucesso.`)
+        response.status(200).send(`nota "jogo-${id_jogo} pessoa-${id_pessoa}" atualizada com sucesso.`)
       }
     )
   }
   
   const deleteNota = (request, response) => {
-    const id_nota = parseInt(request.params.id_nota)
+    const id_jogo = parseInt(request.params.id_jogo)
+    const id_pessoa = parseInt(request.params.id_pessoa)
   
-    pool.query('DELETE FROM notas WHERE id_nota = $1', [id_nota], (error, result) => {
+    pool.query('DELETE FROM notas WHERE id_jogo = $1 AND id_pessoa = $2', [id_jogo, id_pessoa], (error, result) => {
       if (error) {
         throw error
       }
-      response.status(200).send(`nota removida com sucesso com o identificador: ${id_nota}`)
+      response.status(200).send(`nota removida com sucesso com o identificador: jogo-${id_jogo} pessoa-${id_pessoa}`)
     })
   }
 
@@ -290,6 +306,18 @@ const getPessoas = (request, response) => {
     const id_jogo = parseInt(request.params.id_jogo)
   
     pool.query('SELECT * FROM notas WHERE id_jogo = $1', [id_jogo], (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(200).json(results.rows)
+    })
+  }
+
+  const getNotaByJogoPessoa = (request, response) => {
+    const id_jogo = parseInt(request.params.id_jogo)
+    const id_pessoa = parseInt(request.params.id_pessoa)
+  
+    pool.query('SELECT * FROM notas WHERE id_jogo = $1 AND id_pessoa = $2', [id_jogo, id_pessoa], (error, results) => {
       if (error) {
         throw error
       }
@@ -333,5 +361,8 @@ const getPessoas = (request, response) => {
     getMediaNota,
     getJogoById,
     getCountFav,
+    getNotaByJogoPessoa,
+    getFavByJogoPessoa,
+    
   
 }
